@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: instance
+  tasks:
+    - name: "Include ansible-role-mssql"
+      include_role:
+        name: "ansible-role-mssql"

@@ -1,0 +1,65 @@
+---
+
+- name: Prepare
+  hosts: instance
+  
+  gather_facts: no
+  
+  vars:
+
+    db_host: "mssql.molecule"
+    db_username: "sa"
+    db_password: "yourStrong(!)Password"
+
+  tasks:
+
+    - name: install pip3
+      yum:
+        name:
+          - python3-pip
+        state: present
+    
+    - name: install pymssql
+      pip:
+        name: pymssql
+        state: present
+      
+    - name: Copy sql files
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: '0644'
+      with_items:
+        - src: ../resources/sql/db.sql
+          dest: /tmp/db.sql
+        - src: ../resources/sql/change.sql
+          dest: /tmp/change.sql
+
+    - name: Import DB
+      community.general.mssql_db:
+        login_host: "{{ db_host }}"
+        login_user: "{{ db_username }}"
+        login_password: "{{ db_password }}"
+        autocommit: true
+        name: master
+        state: import
+        target: /tmp/db.sql
+      tags:
+        - import
+
+    - name: Change DB
+      community.general.mssql_db:
+        login_host: "{{ db_host }}"
+        login_user: "{{ db_username }}"
+        login_password: "{{ db_password }}"
+        autocommit: true
+        name: SQLTestDB
+        state: import
+        target: /tmp/change.sql
+      tags:
+        - change
+        - notest
+
+...

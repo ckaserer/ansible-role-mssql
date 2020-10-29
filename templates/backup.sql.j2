@@ -1,0 +1,8 @@
+USE {{ db_name }};
+GO
+BACKUP DATABASE {{ db_name }}
+TO DISK = '{{ backup_path }}'
+   WITH FORMAT,
+      MEDIANAME = '{{ backup_medianame }}',
+      NAME = '{{ backup_name }}';
+GO

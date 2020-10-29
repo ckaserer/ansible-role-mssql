@@ -1,0 +1,38 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: instance
+    image: docker.io/pycontribs/centos:8
+    pre_build_image: true
+    groups:
+      - mssql    
+    networks:
+      - name: molecule
+  - name: mssql
+    image: mcr.microsoft.com/mssql/server:latest
+    env:      
+      SA_PASSWORD: "yourStrong(!)Password"
+      ACCEPT_EULA: "Y"
+    command: /opt/mssql/bin/sqlservr
+    networks:
+      - name: molecule
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
+test_sequence:
+    - destroy
+    - syntax
+    - lint
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - verify
+    - destroy
+lint: |
+  set -e
+  ansible-lint .
