@@ -1,0 +1,13 @@
+---
+
+db_host: "mssql.molecule"
+db_username: "sa"
+db_password: "yourStrong(!)Password"
+
+db_name: "SQLTestDB"
+
+backup_path: "/tmp/SQLTestDB.bak"
+backup_medianame: "SQLServerBackups"
+backup_name: "Full Backup of SQLTestDB"
+
+...

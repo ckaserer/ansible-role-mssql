@@ -1,0 +1,14 @@
+# delete database
+
+- name: Remove changes from DB
+  community.general.mssql_db:
+    login_host: "{{ db_host }}"
+    login_user: "{{ db_username }}"
+    login_password: "{{ db_password }}"
+    autocommit: true
+    name: SQLTestDB
+    state: import
+    target: /Users/ckaserer/Development/playground/mssql/delete.sql
+  tags:
+    - delete
+    - notest

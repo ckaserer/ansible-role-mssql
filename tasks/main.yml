@@ -1,0 +1,55 @@
+---
+
+- name: Create a temporary file for backup.sql
+  tempfile:
+    state: file
+    suffix: "mssql.backup.sql"
+  register: mssql_backup_tmp_file
+  tags:
+    - backup
+
+- name: Create MSSQL Backup file
+  template:
+    src: backup.sql.j2
+    dest: "{{ mssql_backup_tmp_file.path }}"
+  tags:
+    - backup
+
+- name: Create a MSSQL Backup
+  community.general.mssql_db:
+    login_host: "{{ db_host }}"
+    login_user: "{{ db_username }}"
+    login_password: "{{ db_password }}"
+    autocommit: true
+    name: "{{ db_name }}"
+    state: import
+    target: "{{ mssql_backup_tmp_file.path }}"
+  tags:
+    - backup
+
+# - name: Create a temporary file for restore.sql
+#   tempfile:
+#     state: file
+#     suffix: "mssql.restore.sql"
+#   register: mssql_restore_tmp_file
+#   tags:
+#     - restore
+
+# - name: Create MSSQL restore file
+#   template:
+#     src: restore.sql.j2
+#     dest: "{{ mssql_restore_tmp_file.path }}"
+#   tags:
+#     - restore
+
+# - name: Restore from a MSSQL Backup
+#   community.general.mssql_db:
+#     login_host: "{{ db_host }}"
+#     login_user: "{{ db_username }}"
+#     login_password: "{{ db_password }}"
+#     autocommit: true
+#     name: master
+#     state: import
+#     target: "{{ mssql_restore_tmp_file.path }}"
+#   tags:
+#     - restore

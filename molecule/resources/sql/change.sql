@@ -1,0 +1,12 @@
+USE [SQLTestDB]
+GO
+
+INSERT INTO SQLTest (ID, c1) VALUES (6, 'test6')
+INSERT INTO SQLTest (ID, c1) VALUES (7, 'test7')
+INSERT INTO SQLTest (ID, c1) VALUES (8, 'test8')
+INSERT INTO SQLTest (ID, c1) VALUES (9, 'test9')
+INSERT INTO SQLTest (ID, c1) VALUES (10, 'test10')
+GO
+
+SELECT * FROM SQLTest
+GO
