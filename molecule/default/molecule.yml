@@ -6,22 +6,31 @@ driver:
 platforms:
   - name: instance
     image: docker.io/pycontribs/centos:8
+    env:
+      http_proxy: ${GITLAB_DEVOPS_GROUP_PROXY}
+      https_proxy: ${GITLAB_DEVOPS_GROUP_PROXY}
+      HTTP_PROXY: ${GITLAB_DEVOPS_GROUP_PROXY}
+      HTTPS_PROXY: ${GITLAB_DEVOPS_GROUP_PROXY}
     pre_build_image: true
     networks:
       - name: molecule
   - name: mssql
-    image: test
-    pre_build_image: true
+    image: mcr.microsoft.com/mssql/server:latest
+    # pre_build_image: true
     env:      
       SA_PASSWORD: "yourStrong(!)Password"
       ACCEPT_EULA: "Y"
+      http_proxy: ${GITLAB_DEVOPS_GROUP_PROXY}
+      https_proxy: ${GITLAB_DEVOPS_GROUP_PROXY}
+      HTTP_PROXY: ${GITLAB_DEVOPS_GROUP_PROXY}
+      HTTPS_PROXY: ${GITLAB_DEVOPS_GROUP_PROXY}
     command: /opt/mssql/bin/sqlservr
     networks:
       - name: molecule
 provisioner:
   name: ansible
-  env:
-    MOLECULE_NO_LOG: false
+  # env:
+  #   MOLECULE_NO_LOG: false
 verifier:
   name: ansible
 test_sequence:

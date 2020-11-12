@@ -1,9 +1,10 @@
 ---
 stages:
+  - init
   - test
 
 variables:
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.pip"
+  PIP_CACHE_DIR: "${CI_PROJECT_DIR}/.pip"
   GIT_STRATEGY: clone
 
 cache:
@@ -12,19 +13,26 @@ cache:
     - virtenv/
 
 before_script:
-  - export HTTP_PROXY=http://proxy.svdgmbh.at:8066
-  - export HTTPS_PROXY=http://proxy.svdgmbh.at:8066
-  - python3 -V
-  - pip3 install virtualenv
-  - python3 -m virtualenv virtenv
-  - source virtenv/bin/activate
-  - pip3 install ansible molecule docker ansible-lint molecule-docker
-  - ansible --version
-  - ansible-lint --version
-  - molecule --version
-  - docker --version
+  - export HTTP_PROXY=${GITLAB_DEVOPS_GROUP_PROXY}
+  - export HTTPS_PROXY=${GITLAB_DEVOPS_GROUP_PROXY}
+  - export http_proxy=${GITLAB_DEVOPS_GROUP_PROXY}
+  - export https_proxy=${GITLAB_DEVOPS_GROUP_PROXY}
 
+prepare:
+  stage: init
+  script:
+    - pip3 install virtualenv
+    - python3 -m virtualenv virtenv
+    - source virtenv/bin/activate
+    - pip3 install -r requirements.txt
+    - python3 -V
+    - ansible --version
+    - ansible-lint --version
+    - molecule --version
+    - docker --version
+  
 molecule:
   stage: test
   script:
-    - molecule test
+    - source virtenv/bin/activate
+    - molecule test --parallel
