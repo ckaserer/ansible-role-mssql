@@ -18,6 +18,8 @@ platforms:
       ACCEPT_EULA: "Y"
       HTTP_PROXY: http://proxy.svdgmbh.at:8066
       HTTPS_PROXY: http://proxy.svdgmbh.at:8066
+      http_proxy: http://proxy.svdgmbh.at:8066
+      https_proxy: http://proxy.svdgmbh.at:8066
     command: /opt/mssql/bin/sqlservr
     networks:
       - name: molecule
