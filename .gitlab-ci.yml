@@ -27,4 +27,4 @@ before_script:
 molecule:
   stage: test
   script:
-    - MOLECULE_NO_LOG="false"; molecule test
+    - molecule test

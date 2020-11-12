@@ -23,6 +23,8 @@ platforms:
       - name: molecule
 provisioner:
   name: ansible
+  env:
+    MOLECULE_NO_LOG: false
 verifier:
   name: ansible
 test_sequence:
