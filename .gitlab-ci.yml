@@ -42,7 +42,7 @@ container:
         --build-arg HTTPS_PROXY=${GITLAB_DEVOPS_GROUP_PROXY} \
         --build-arg http_proxy=${GITLAB_DEVOPS_GROUP_PROXY} \
         --build-arg https_proxy=${GITLAB_DEVOPS_GROUP_PROXY} \
-        molecule/docker/dockerfile
+        molecule/resources/docker/
 
 molecule:
   stage: test
