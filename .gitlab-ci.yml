@@ -36,13 +36,14 @@ container:
   stage: build
   script:
     - source virtenv/bin/activate
-    - docker build \
-        -t ansible-role-mssql \
-        --build-arg HTTP_PROXY=${GITLAB_DEVOPS_GROUP_PROXY} \
-        --build-arg HTTPS_PROXY=${GITLAB_DEVOPS_GROUP_PROXY} \
-        --build-arg http_proxy=${GITLAB_DEVOPS_GROUP_PROXY} \
-        --build-arg https_proxy=${GITLAB_DEVOPS_GROUP_PROXY} \
-        molecule/resources/docker/
+    - |-
+        docker build
+          -t ansible-role-mssql
+          --build-arg HTTP_PROXY=${GITLAB_DEVOPS_GROUP_PROXY}
+          --build-arg HTTPS_PROXY=${GITLAB_DEVOPS_GROUP_PROXY}
+          --build-arg http_proxy=${GITLAB_DEVOPS_GROUP_PROXY}
+          --build-arg https_proxy=${GITLAB_DEVOPS_GROUP_PROXY}
+          molecule/resources/docker/
 
 molecule:
   stage: test
