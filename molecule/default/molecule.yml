@@ -15,15 +15,11 @@ platforms:
     networks:
       - name: molecule
   - name: mssql
-    image: mcr.microsoft.com/mssql/server:latest
-    # pre_build_image: true
+    image: ansible-role-mssql
+    pre_build_image: true
     env:      
       SA_PASSWORD: "yourStrong(!)Password"
       ACCEPT_EULA: "Y"
-      http_proxy: ${GITLAB_DEVOPS_GROUP_PROXY}
-      https_proxy: ${GITLAB_DEVOPS_GROUP_PROXY}
-      HTTP_PROXY: ${GITLAB_DEVOPS_GROUP_PROXY}
-      HTTPS_PROXY: ${GITLAB_DEVOPS_GROUP_PROXY}
     command: /opt/mssql/bin/sqlservr
     networks:
       - name: molecule
