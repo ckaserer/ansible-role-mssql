@@ -7,9 +7,6 @@ platforms:
   - name: instance
     image: docker.io/pycontribs/centos:8
     pre_build_image: true
-    env:
-      - HTTP_PROXY: http://proxy.svdgmbh.at:8066
-      - HTTPS_PROXY: http://proxy.svdgmbh.at:8066
     groups:
       - mssql    
     networks:
@@ -19,6 +16,8 @@ platforms:
     env:      
       SA_PASSWORD: "yourStrong(!)Password"
       ACCEPT_EULA: "Y"
+      - HTTP_PROXY: http://proxy.svdgmbh.at:8066
+      - HTTPS_PROXY: http://proxy.svdgmbh.at:8066
     command: /opt/mssql/bin/sqlservr
     networks:
       - name: molecule
