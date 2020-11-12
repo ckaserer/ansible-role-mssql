@@ -1,0 +1,21 @@
+FROM mcr.microsoft.com/mssql/server
+
+USER root
+
+RUN apt-get update && \
+    apt-get install -y \
+        python \
+        python3-apt \
+        python3-pip \
+        sudo \
+        bash \
+        ca-certificates \
+        iproute2 \
+        init && \
+    apt-get clean; \
+    pip3 install pymssql;
+
+RUN mkdir -p /home/mssql; \
+    chown mssql /home/mssql;
+
+USER 10001
