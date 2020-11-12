@@ -12,6 +12,7 @@
   template:
     src: backup.sql.j2
     dest: "{{ mssql_backup_tmp_file.path }}"
+    mode: "0644"
   tags:
     - backup
 
