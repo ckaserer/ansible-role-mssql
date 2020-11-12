@@ -29,7 +29,9 @@ provisioner:
   #   MOLECULE_NO_LOG: false
 verifier:
   name: ansible
-test_sequence:
+scenario:
+  name: default
+  test_sequence:
     - destroy
     - syntax
     - lint
