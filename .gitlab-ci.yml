@@ -48,4 +48,4 @@ molecule:
   stage: test
   script:
     - source virtenv/bin/activate
-    - molecule test --parallel
+    - molecule test
