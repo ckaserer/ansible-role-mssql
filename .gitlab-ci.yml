@@ -26,7 +26,7 @@ prepare:
     - python3 -m virtualenv virtenv
     - source virtenv/bin/activate
     - pip3 install -r requirements.txt
-    - ansible-galaxy install -r requirements.yml
+    # - ansible-galaxy install -r requirements.yml # does not work as proxy is blocking the dns
     - python3 -V
     - ansible --version
     - ansible-lint --version
