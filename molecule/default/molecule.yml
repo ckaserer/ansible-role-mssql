@@ -36,7 +36,7 @@ test_sequence:
     - create
     - prepare
     - converge
-    - idempotence
+#   - idempotence # idempotency check disabled. a backup should always be created
     - verify
     - destroy
 lint: |
