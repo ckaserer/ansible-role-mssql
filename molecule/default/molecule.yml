@@ -11,6 +11,8 @@ platforms:
       https_proxy: ${GITLAB_DEVOPS_GROUP_PROXY}
       HTTP_PROXY: ${GITLAB_DEVOPS_GROUP_PROXY}
       HTTPS_PROXY: ${GITLAB_DEVOPS_GROUP_PROXY}
+      no_proxy: ".molecule"
+      NO_PROXY: ".molecule"
     pre_build_image: true
     networks:
       - name: molecule
@@ -20,6 +22,7 @@ platforms:
     env:      
       SA_PASSWORD: "yourStrong(!)Password"
       ACCEPT_EULA: "Y"
+    command: /opt/mssql/bin/sqlservr
     networks:
       - name: molecule
 provisioner:
