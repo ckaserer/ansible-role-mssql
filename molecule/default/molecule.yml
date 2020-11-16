@@ -27,6 +27,9 @@ platforms:
       - name: molecule
 provisioner:
   name: ansible
+  config_options:
+    defaults:
+      remote_tmp: "/tmp"
   # env:
   #   MOLECULE_NO_LOG: false
 verifier:
