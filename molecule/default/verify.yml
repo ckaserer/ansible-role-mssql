@@ -4,6 +4,13 @@
 - name: Verify
   hosts: all
   tasks:
-  - name: Example assertion
+  - name: Get file stats for backup
+    stat:
+      path: /tmp/SQLTestDB.bak
+    register: backup_result
+
+  - name: Basic verification of the backup
     assert:
-      that: true
+      that: 
+        - backup_result.stat.exists
+        - backup_result.stat.size > 0

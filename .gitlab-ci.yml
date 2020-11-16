@@ -1,8 +1,9 @@
 ---
 stages:
   - init
-  - build
+  # - build
   - test
+  # - deploy
 
 variables:
   PIP_CACHE_DIR: "${CI_PROJECT_DIR}/.pip"
@@ -33,20 +34,26 @@ prepare:
     - molecule --version
     - docker --version
 
-container:
-  stage: build
-  script:
-    - source virtenv/bin/activate
-    - docker build
-          -t ansible-role-mssql
-          --build-arg HTTP_PROXY=${GITLAB_DEVOPS_GROUP_PROXY}
-          --build-arg HTTPS_PROXY=${GITLAB_DEVOPS_GROUP_PROXY}
-          --build-arg http_proxy=${GITLAB_DEVOPS_GROUP_PROXY}
-          --build-arg https_proxy=${GITLAB_DEVOPS_GROUP_PROXY}
-          molecule/resources/docker
+# container:
+#   stage: build
+#   script:
+#     - source virtenv/bin/activate
+#     - docker build
+#           -t ansible-role-mssql
+#           --build-arg HTTP_PROXY=${GITLAB_DEVOPS_GROUP_PROXY}
+#           --build-arg HTTPS_PROXY=${GITLAB_DEVOPS_GROUP_PROXY}
+#           --build-arg http_proxy=${GITLAB_DEVOPS_GROUP_PROXY}
+#           --build-arg https_proxy=${GITLAB_DEVOPS_GROUP_PROXY}
+#           molecule/resources/docker
 
 molecule:
   stage: test
   script:
     - source virtenv/bin/activate
     - molecule test
+
+# sva-test:
+#   stage: deploy
+#   script:
+#     - source virtenv/bin/activate
+#     - molecule test -s sva-test
